@@ -1,0 +1,3 @@
+- [Llibre d'estil](http://www.ub.edu/cub/index.php)
+- [Guia de la UB](http://www.ub.edu/tfg/)
+- [Dipòsit](http://diposit.ub.edu/dspace/handle/2445/34465)
