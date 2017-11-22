@@ -1,3 +1,4 @@
 - [Llibre d'estil](http://www.ub.edu/cub/index.php)
 - [Guia de la UB](http://www.ub.edu/tfg/)
 - [Dipòsit](http://diposit.ub.edu/dspace/handle/2445/34465)
+- [Exemple Microxip](https://www.tutorialspoint.com/microprocessor/microprocessor_8086_instruction_sets.htm)
