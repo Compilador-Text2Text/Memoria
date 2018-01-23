@@ -1,10 +1,10 @@
 .PS
 N1init: box width 0.8 "Inicialitzador"; arrow "1" "";
-N1sist: box "Funcions" "Sistema";
+N1sist: box "Funcions" "de Sistema";
 	down; arrow at N1init.s "2 " rjust;
-N2lexi: box "L\(`exic"; right; move to last box.e; move;
-N2sint: box "Sint\(`actic"; move;
-N2sema: box "Sem\(`antic";
+N2lexi: box "Analitzador" "L\(`exic"; right; move to last box.e; move;
+N2sint: box "Analitzador" "Sint\(`actic"; move;
+N2sema: box "Analitzador" "Sem\(`antic";
 	down; move to N1init.s; arc;
 	line to (N2sema, Here) - (arcrad, 0); arc cw ->; move to (last arc.end, last arc.start); "4";
 	up; move to N2sint.n; arc <-; move to (last arc.end, Here) - (0, arcrad /2); "3";
