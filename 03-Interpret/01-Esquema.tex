@@ -20,3 +20,20 @@ Llavors podria començar a explicar el lèxic i no caldria començar amb l'execu
     \caption{Esquema del projecte}
     \label{fig:esquema}
 \end{figure}
+
+Com podem apreciar a la figura TODO,
+% Parlem del main
+el \textit{main} és el responsable dels arguments,
+per saber tots els arguments podeu fer \textsc{-h}
+on demanarà sempre per defecte el \textsc{-f} per saber quin programa executar.
+Llavors veiem que el \textit{main} fa una crida al \textit{Inicialitzador}.
+
+% Parlem de l'inicialitzador
+L'\textit{Inicialitzador} rep els paràmetres del \textit{main}
+i aquest fa el paper de controlador.
+És qui fa les crides de forma ordenada per inicialitzar i finalitzar les funcions de sistema,
+per a poder fer el lèxic, la sintaxis, la semàntica i per finalitzar al executor.
+Fins i tot, si el \textit{main} l'hi demana, pot mostrar les funcions de sistema.
+
+% Parlem de les funcions de sistema.
+Les \textit{Funcions de Sistema} és el encarregat TODO memòria.
