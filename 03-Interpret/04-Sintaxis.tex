@@ -1,0 +1,46 @@
+\subsection{Sintàctic}
+\input{03-Interpret/04-ZAlgoritme.tex}
+\input{03-Interpret/04-ZTaulaSYA.tex}
+\input{03-Interpret/04-ZTaulaSYA2.tex}
+Entenc que quan està operant
+$ 3 + 2 + 5 \times 8 \wedge 2 \wedge 2 $
+Escriure bonic, taules
+o1 o2
++  +
+-> ->
+2  2
+(c = o1 == -> ? 0: 1)
+(o1 + c > o2)
+(2 + 0 > 2) -> continua. Etc
+
+\subsubsection{Salts}
+Expreso la ida de salts aquí i no en Executable... potser hauria d'estar a executable aquest
+apartat...
+Tots els salts que efectua el codi normalment ho he resumit amb 3.
+\begin{itemize}
+    \item[\textbf{goto}] Sempre farà el salt.
+    \item[\textbf{gotoZ}] Farà el salt només si és zero.
+    \item[\textbf{gotoNZ}] Farà el salt només si no és zero.
+\end{itemize}
+Aquests estan restringits amb la funció que estiguin.
+D'aquesta manera és impossible fer un salt entre funcions.
+
+\subsubsection{Bucles}
+Com ja em dit a (TODO), l'executable reserva un espai especial per operacions que ell no pot tractar.
+Per exemple els \textbf{while}'s, \textbf{for}'s i \textbf{if}'s.
+
+En codi:
+\begin{itemize}
+    \item while ( condició );
+        \subitem instruccions;
+    \item end-while;
+\end{itemize}
+
+Això s'ha de transformar amb gotoZ, gotoNZ.
+Per a poder-ho fer, com que els salts estan en frases diferents,
+tenim el problema de poder modificar els elements no modificats.
+Llavors necessitarem d'una pila.
+Aquesta serà la responsable de dir si és un \textbf{if}, \textbf{while}, \textbf{elseif}.
+
+No sé molt bé com explicar-ho, sobretot d'una forma que s'entengui de forma agradable!
+TODO

@@ -1,0 +1,135 @@
+\subsection{Executable}
+
+{\color{blue}
+\begin{itemize}
+    \item >> TODO 1/instruccions.h  1/descriptor.h
+    \item Orientat amb C.
+        \subitem LIFO -pila- per les funcions dinàmiques.
+        \subitem Posar alguna imatge per a fer-ho visual.
+    \item LIFO -pila- per la memòria d'execució.
+    \item Notació Polaca Inversa per executar el codi.
+        \subitem El perquè
+        \subitem Com s'executa
+    \item Execució de paraula $\to$ switch
+\end{itemize}
+}
+L'apartat més important del projecte,
+ha sigut pensar com fer l'apartat executable.
+
+Per a fer-ho he tingut que saber com treballa C.
+Aquest cada execució és un procés.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics{pic/proces.eps}
+    \caption{Procés en C}
+    \label{fig:proces}
+\end{figure}
+Com podem veure a la figura \ref{fig:proces},
+hi ha la pila,
+on guarda les funcions, variables globals, arguments i
+tota la informació que necessita per executar correctament les funcions.
+Trobem la memòria dinàmica que és on guardarà la memòria usant la funció ``malloc".
+Hi ha les variables globals i finalment el codi màquina.\\
+
+Per la meva sort, l'espai lliure i la memòria dinàmica ho hereto de C.
+D'aquesta forma és simplifica el projecte al no tenir que pensar amb reservar o alliberar memòria.\\
+
+Llavors el problema és redueix en:
+\begin{itemize}
+    \item Pila (les crides de funcions).
+    \item Variables globals.
+    \item Codi màquina.
+\end{itemize}
+
+Però com que el projecte està fet amb C, les funcions pròpies de C
+no puc guardar-ho de la mateixa forma que guardo les funcions entrades
+per l'usuari. Ja que necessito funcions pròpies de C.
+
+Aquest fet complica l'execució demanant separar el que són les funcions
+de sistema amb les funcions que ha generat l'usuari.
+
+\subsubsection{Pila}
+Igual que fa C, l'execució la gestiona una pila.
+Això simplifica la forma de fer crides a funcions,
+permetent crear funcions recursives per exemple o simplement que
+cridi altres funcions.\\
+
+Però també té més utilitats.
+Com que faig anar en memòria local (variable de funció) la pila,
+permet poder crear `threads',
+ja que podem generar una pila independent a l'altra.
+Tot i que comparteixin el mateix espai lliure, les variables globals i fins i tot el mateix codi.
+
+Tot i tenir aquest potencial, en aquest projecte no s'ha portat a terme.\\
+
+La pila conté molta informació per a poder executar correctament les instruccions.
+
+
+% variables, arguments i locals
+També ha de tenir les variables,
+en aquest cas s'ha fet que tingui en compte les variables locals de la funció
+i també els arguments que li passen a la funció.
+
+% Comptador
+Per saber on està executant el codi,
+he fet que cada pila tingui el seu propi comptador.
+Fet que permet executar les instruccions una darrera l'altre.
+
+% Descriptor
+També ha de saber amb quin codi està relacionat,
+llavors té un punter per saber quines instruccions haurà d'executar.
+
+% Memòria d'execució
+Té una memòria d'execució.
+Aquesta és deguda al plantejament de com ha d'executar les instruccions.
+El plantejament és com fa per exemple \textit{PostScript} o \textit{dc},
+notació polaca inversa.
+Llavors com ho indica TODO !!! TODO !!! Llibre, executar polac.
+Sabem com executar les instruccions d'una forma molt fàcil.
+
+% Retorn
+Ha de saber on ha de retornar la informació.
+Com ja s'ha dit, al executar les instruccions amb format pila,
+cal saber on ha d'escriure les dades obtingues.
+Per alliberar la pila (alliberar-ho en memòria),
+és important que les funcions sempre acabin amb una funció de sortida.\\
+
+% TODO MILLORES A FER
+Possibles millores a fer:
+
+% Variables i fer menys mallocs.
+arguments i variables locals(canviar la memòria que demana de la pila)
+memòria d'execució, fer-ho amb uns registres limitats, evitant fer uns quants ``mallocs''.
+
+% Mallocs i funcions de sistema
+Ara, per tenir les funcions de sistema, faig diferents ``mallocs'' per reservar quins arguments
+i altra informació. Això implica que com més funcions de sistema tingui el llenguatge, més lent anirà ja que
+demanarà més temps d'inicialització.
+És podria millorar fent que tota aquesta informació no la guardes en cap objecte,
+sinó que fos informació dins del propi codi, allargara la compilació, però l'execució guanyaria velocitat.
+
+\subsubsection{Union valor}
+Per simplificació, he decidit fer que les variables siguin un union.
+Així tinc un vector que conté totes les variables siguin el que siguin.
+I són d'accés directe. Ja que el vector és de mida regular.
+
+% Tipus relacionat amb el valor
+Directament relacionat, tenim un `enum' dels tipus.
+Ho faig amb un `enum', perquè puc definir el \textbf{Tipus\_END},
+i aquest em serveix per a saber si estic fent una crida dins dels tipus o fora.
+I per depurar el codi em simplifica la feina.
+
+\subsubsection{Localitzacions}
+Tenim bàsicament dues localitzacions.
+La que defineix valors a la memòria d'execució i les funcions.
+Aquestes últimes també tenen la capacitat de només definir la memòria d'execució,
+però normalment comporten més complexitat.\\
+
+Pel que farà la definició de la memòria d'execució tenim:
+per codi, la memòria d'execució agafarà les dades del codi.
+Sinó serà per variables. Com pot ser arguments, variables locals o
+variables globals.
+
+I finalment per les funcions tenim:
+les funcions creades per l'usuari i
+les funcions que proporciona el sistema.

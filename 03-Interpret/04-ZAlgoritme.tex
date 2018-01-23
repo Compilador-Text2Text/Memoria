@@ -1,0 +1,41 @@
+$P$ pila
+$Q$ qua, sortida desitjada
+$tokens$, la entrada
+\begin{algorithm}
+\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+\SetKwInOut{Input}{entrada}\SetKwInOut{Output}{sortida}
+
+\KwData{tokens en notació infixa.}
+\KwResult{tokens en notació polaca inversa.}
+$P$ una pila buida\;
+$Q$ una qua buida\;
+\BlankLine
+\While{Quedin tokens}
+{
+    $t \gets$ següent token\;
+    \Switch{$t$}
+    {
+        \Case{Valor o Variables}{$Q$.push $t$}
+        \Case(\tcp*[f]{Exemple: $\sin(x)$, (,\dots}){Funció o Obert}{$P$.push $t$}
+        \Case(\tcp*[f]{Exemple: ), \}, `,'\dots}){Tancat o Separador}
+        {
+            \While(\tcp*[f]{$P \equiv \emptyset \Rightarrow$ ERROR}){$P$.peek $\neq$ Obert}
+            {
+                $Q$.push $P$.pop
+            }
+            \If{$t$ és Tancat}{$P$.pop}
+        }
+        \Case(\tcp*[f]{Exemple: +, /,\dots}){Operador}
+        {
+            \If{$t$ és associativa per l'esquerra}{$a \gets 1$}
+            \Else{$a \gets 0$}
+            \While{$P$.peek és un operador $> t - a$}{$Q$.push $P$.pop}
+            $P$.push $t$
+        }
+        \Other{Finalitzar}
+    }
+}
+\While(\tcp*[f]{Sí és Obert $\Rightarrow$ ERROR}){$P \neq \emptyset$}{$Q$.push $P$.pop}
+\caption{Shunting-yard algorithm}\label{shuntingyardalgorithm}
+\end{algorithm}

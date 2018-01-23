@@ -1,0 +1,119 @@
+% Default uni: \documentclass[12pt,a4paper,openright,oneside]{article}
+% https://en.wikibooks.org/wiki/LaTeX/Document_Structure
+% openright no el poso
+% Tampoc poso oneside perquè és el defecte d'article.
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{graphicx}
+%\usepackage{algpseudocode}
+%\usepackage{algorithm2e}
+\usepackage[ruled,vlined]{algorithm2e}
+%\usepackage{algorithmic}
+%\usepackage{algorithmicx}
+\usepackage{listings}       % Per a posar codi.
+\usepackage{ifthen} \newboolean{long}
+
+\usepackage{xcolor} % Per indicar que no cal fer cas
+
+\usepackage{float}
+
+\usepackage{hyperref}
+
+\usepackage{epsf}
+
+% https://tex.stackexchange.com/questions/80406/catalan-language-ela-geminada
+% Ela genimada
+\def·#1{%
+  \ifmmode
+    \cdot #1
+    %\csname normal@char\string"\endcsname l%
+  \else%
+    \def\argument{#1}%
+    \if\argument l%
+      \leftllkern=0pt\rightllkern=0pt\raiselldim=0pt%
+      \setbox0\hbox{l}\setbox1\hbox{l\/}\setbox2\hbox{.}%
+      \advance\raiselldim by \the\fontdimen5\the\font
+      \advance\raiselldim by -\ht2%
+      \leftllkern=-.25\wd0%
+      \advance\leftllkern by \wd1%
+      \advance\leftllkern by -\wd0%
+      \rightllkern=-.25\wd0%
+      \advance\rightllkern by -\wd1%
+      \advance\rightllkern by \wd0%
+      \allowhyphens\discretionary{-}{l}%
+      {\hbox{}\kern\leftllkern\raise\raiselldim\hbox{.}%
+        \kern\rightllkern\hbox{l}}\allowhyphens%
+    \else
+      \if\argument L%
+        \leftllkern=0pt\rightllkern=0pt\raiselldim=0pt%
+        \setbox0\hbox{L}\setbox1\hbox{L\/}\setbox2\hbox{.}%
+        \advance\raiselldim by .5\ht0%
+        \advance\raiselldim by -.5\ht2%
+        \leftllkern=-.125\wd0%
+        \advance\leftllkern by \wd1%
+        \advance\leftllkern by -\wd0%
+        \rightllkern=-\wd0%
+        \divide\rightllkern by 6%
+        \advance\rightllkern by -\wd1%
+        \advance\rightllkern by \wd0%
+        \allowhyphens\discretionary{-}{L}%
+        {\hbox{}\kern\leftllkern\raise\raiselldim\hbox{.}%
+           \kern\rightllkern\hbox{L}}\allowhyphens%
+      \else
+        #1
+      \fi
+    \fi
+  \fi
+  }
+  
+% Mostrar codi bonic
+\lstset
+{
+    language=C,
+    numbers=left,
+    numberstyle=\tiny,
+}
+
+% El headheight l'he possat a 15 per treure el warning de fancyhdr (causat pel 12pt normalment 10pt)
+% Margin 1.2in és el defecte de la uni.
+\usepackage[margin=1.2in,headheight=15pt]{geometry}
+\title{Memòria}
+\author{Arnau Sistach}
+
+% Defecte la uni
+\parskip=5pt    % \\ espai que genera
+\parindent=15pt % les idents
+
+% https://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
+% Ja que la de la biblioteca va indicar que es tenia que dir sumari!
+\addto\captionscatalan{% Replace "english" with the language you use
+  \renewcommand{\contentsname}{Sumari}
+  \renewcommand{\listfigurename}{Sumari de figures}
+  \renewcommand{\listtablename}{Sumari de taules}
+}
+%\renewcommand{\listfigurename}{My nice list of figures}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Considero que queda molt bonic.
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{Sistach}
+\fancyhead[L]{Intèrpret}
+\rfoot{Pàgina \thepage{} de \pageref{LastPageRoman}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\setboolean{long}{false} % versió curta o llarga
+\input{00-Presentacio/tot.tex}  \newpage
+\rfoot{Pàgina \thepage{} de \pageref{LastPageArabic}} \pagenumbering{arabic} \setcounter{page}{1}
+\input{01-Introduccio/tot.tex}  \newpage
+\input{02-Previ/tot.tex}        \newpage
+\input{03-Interpret/tot.tex}    \newpage
+\input{04-Proves/tot.tex}       \newpage
+\input{05-Conclusio/tot.tex}    \newpage
+\input{20-Bibliografia/tot.tex}
+\label{LastPageArabic}
+\end{document}
